@@ -1,0 +1,34 @@
+ul.lapCountdown li {
+    display: inline-block;
+    background: #2F4A7C no-repeat left top;
+    width: 50px;
+    margin-bottom: 4em;
+    text-align: center;
+    box-shadow: 2px 2px 1px #111111;
+}
+ul.lapCountdown li span {
+    font-size: 3em;
+    font-weight: lighter;
+    color: #FAFAFA;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+}
+ul.lapCountdown li span::before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    border-top: 2px solid #1f2225;
+    position: absolute;
+    top: 25px;
+}
+ul.lapCountdown li p.timeRefDays,
+ul.lapCountdown li p.timeRefHours,
+ul.lapCountdown li p.timeRefMinutes,
+ul.lapCountdown li p.timeRefSeconds,
+ul.lapCountdown li p.timeRefMilliSeconds {
+    margin-top: 1em;
+    color: #909091;
+    text-transform: uppercase;
+    font-size: .875em;
+}

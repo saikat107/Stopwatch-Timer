@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Countdown Timer</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/reset.css"/>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/columnCenter.css"/>
+    <link rel="stylesheet" href="css/lapTimerStyleSheet.css">
+    <style rel="stylesheet" type="text/css">
+        .lapCountdownList {
+            /*margin-left: 120px;
+            margin-left: -20px;*/
+        }
+
+        .lapBtn {
+            margin-top: -10px;
+        }
+
+        .lapControlBtn {
+            margin-left: -70px;
+        }
+
+        .lapControlBtn table tr td {
+            padding-left: 10px;
+            margin: 0px;
+        }
+
+        .btn-control
+        {
+            width: 150px;
+            padding: 5px;
+        }
+
+
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- JS -->
+    <script src="js/jquery-2.2.0.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/npm.js"></script>
+    <!-- <script src="js/countdown.js"></script> -->
+    <!-- <script>
+
+            $(document).ready(function(){
+                $("#countdown").countdown({
+                    date: "17 august 2013 12:00:00",
+                    format: "on"
+                },
+
+                function() {
+                    // callback function
+                });
+            });
+
+        </script> -->
+</head>
+<body>
+
+<!-- LOGO -->
+
+<!-- TIMER -->
+<div class="timer-area">
+    <h1>Countdown Timer</h1>
+    <div class="container-fluid">
+        <div class="row row-centered">
+            <div class="col-md-8 col-centered">
+                <div class="row row-centered">
+                    <div class="col-md-2 col-centered">
+                        <button type="button" class="btn btn-primary active" style="margin-left: 20px;">Team Name
+                        </button>
+                    </div>
+                    <div class="col-md-6 col-centered">
+                        <div class="form-group has-feedback" style="margin-left: -20px;">
+                            <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                            <input type="text" class="form-control" placeholder="Team Name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul id="countdown">
+        <li><span class="hours">00</span>
+            <p class="timeRefHours">hours</p>
+        </li>
+        <li><span class="minutes">00</span>
+            <p class="timeRefMinutes">minutes</p>
+        </li>
+        <li><span class="seconds">00</span>
+            <p class="timeRefSeconds">seconds</p>
+        </li>
+        <li><span class="miliSeconds">000</span>
+            <p class="timeRefMilliSeconds">milli</p>
+        </li>
+    </ul>
+    <div class="btn-group-lg" style="margin-top: -50px; padding-bottom: 10px;">
+        <button type="submit" class="btn btn-success active" style="width:150px; padding: 5px;">Start</button>
+        <button type="submit" class="btn btn-default disabled" style="width: 150px; padding: 5px;">Reset</button>
+        <button type="submit" class="btn btn-primary disabled" style="width: 150px; padding: 5px;">Export</button>
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: -30px;">
+    <div class="row row-centered">
+        <div class="col-md-7 col-centered lapCountdownList">
+            <div class="row row-centered">
+                <div class="col-md-1 col-centered">
+                    <button type="button" class="btn btn-success lapBtn">Lap 1</button>
+                </div>
+                <div class="col-md-4 col-centered" style="width: 300px; padding:  0px 25px;">
+                    <ul class="lapCountdown">
+                        <li><span class="hours">00</span>
+                            <!--<p class="timeRefHours">hours</p>-->
+                        </li>
+                        <li><span class="minutes">00</span>
+                            <!-- <p class="timeRefMinutes">minutes</p>-->
+                        </li>
+                        <li><span class="seconds">00</span>
+                            <!--<p class="timeRefSeconds">seconds</p>-->
+                        </li>
+                        <li><span class="miliSeconds">000</span>
+                            <!-- <p class="timeRefMilliSeconds">milli</p>-->
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-centered lapControlBtn">
+                    <table>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-primary active">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-danger">
+                                    <span class="glyphicon glyphicon-stop"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="margin-top: -50px;">
+    <div class="row row-centered">
+        <div class="col-md-7 col-centered lapCountdownList">
+            <div class="row row-centered">
+                <div class="col-md-1 col-centered">
+                    <button type="button" class="btn btn-success lapBtn">Lap 2</button>
+                </div>
+                <div class="col-md-4 col-centered" style="width: 300px; padding:  0px 25px;">
+                    <ul class="lapCountdown">
+                        <li><span class="hours">00</span>
+                            <!--<p class="timeRefHours">hours</p>-->
+                        </li>
+                        <li><span class="minutes">00</span>
+                            <!-- <p class="timeRefMinutes">minutes</p>-->
+                        </li>
+                        <li><span class="seconds">00</span>
+                            <!--<p class="timeRefSeconds">seconds</p>-->
+                        </li>
+                        <li><span class="miliSeconds">000</span>
+                            <!-- <p class="timeRefMilliSeconds">milli</p>-->
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-centered lapControlBtn">
+                    <table>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-primary active">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-danger">
+                                    <span class="glyphicon glyphicon-stop"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="margin-top: -50px;">
+    <div class="row row-centered">
+        <div class="col-md-7 col-centered lapCountdownList">
+            <div class="row row-centered">
+                <div class="col-md-1 col-centered">
+                    <button type="button" class="btn btn-success lapBtn">Lap 3</button>
+                </div>
+                <div class="col-md-4 col-centered" style="width: 300px; padding:  0px 25px;">
+                    <ul class="lapCountdown">
+                        <li><span class="hours">00</span>
+                            <!--<p class="timeRefHours">hours</p>-->
+                        </li>
+                        <li><span class="minutes">00</span>
+                            <!-- <p class="timeRefMinutes">minutes</p>-->
+                        </li>
+                        <li><span class="seconds">00</span>
+                            <!--<p class="timeRefSeconds">seconds</p>-->
+                        </li>
+                        <li><span class="miliSeconds">000</span>
+                            <!-- <p class="timeRefMilliSeconds">milli</p>-->
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-centered lapControlBtn">
+                    <table>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-primary active">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-danger">
+                                    <span class="glyphicon glyphicon-stop"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row row-centered" style="margin-top: -40px;">
+        <div class="col-md-3 col-centered">
+            <div class="btn-group-lg">
+                <button type="button" class="btn btn-primary" style="width: 150px; padding: 5px;">
+                    <span class="glyphicon glyphicon-save"></span>Save
+                </button>
+                <button type="button" class="btn btn-danger" style="width: 150px; padding: 5px;">
+                    <span class="glyphicon glyphicon-remove"></span>Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var hours = $('.hours');
+        var minutes = $('.minutes');
+        var seconds = $('.seconds');
+        var milli = $('.miliSeconds');
+        var count = 0;
+        var sCount = 0;
+        var mCount = 0;
+        var hCount = 0;
+        var display = 100;
+
+        function updateHour() {
+            hCount++;
+            if (hCount == 60) {
+                hCount = 0;
+            }
+            hours.text(("0" + hCount).slice(-2));
+        };
+
+        function updateMinute() {
+            mCount++;
+            if (mCount === 60) {
+                mCount = 0;
+                updateHour();
+            }
+            minutes.text(("0" + mCount).slice(-2));
+        };
+
+        function updateSecond() {
+            sCount++;
+            if (sCount === 60) {
+                sCount = 0;
+                updateMinute();
+            }
+            seconds.text(("0" + sCount).slice(-2));
+        };
+        function updateMilliSecond() {
+            count++;
+            if (count === 100) {
+                count = 0;
+                updateSecond();
+            }
+            milli.text(("0" + count).slice(-2));
+            setTimeout(updateMilliSecond, 10);
+        };
+        updateMilliSecond();
+    })
+</script>
+</body>
+</html>
