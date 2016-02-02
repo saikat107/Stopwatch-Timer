@@ -17,10 +17,6 @@
     <link rel="stylesheet" href="css/columnCenter.css"/>
     <link rel="stylesheet" href="css/lapTimerStyleSheet.css">
     <style rel="stylesheet" type="text/css">
-        .lapCountdownList {
-            /*margin-left: 120px;
-            margin-left: -20px;*/
-        }
 
         .lapBtn {
             margin-top: -10px;
@@ -35,11 +31,6 @@
             margin: 0px;
         }
 
-        .btn-control
-        {
-            width: 150px;
-            padding: 5px;
-        }
 
 
     </style>
@@ -52,21 +43,6 @@
     <script src="js/jquery-2.2.0.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/npm.js"></script>
-    <!-- <script src="js/countdown.js"></script> -->
-    <!-- <script>
-
-            $(document).ready(function(){
-                $("#countdown").countdown({
-                    date: "17 august 2013 12:00:00",
-                    format: "on"
-                },
-
-                function() {
-                    // callback function
-                });
-            });
-
-        </script> -->
 </head>
 <body>
 
@@ -94,25 +70,33 @@
         </div>
     </div>
     <ul id="countdown">
-        <li><span class="hours">00</span>
+        <li><span id="hours" class="hours">00</span>
             <p class="timeRefHours">hours</p>
         </li>
-        <li><span class="minutes">00</span>
+        <li><span id="minutes" class="minutes">00</span>
             <p class="timeRefMinutes">minutes</p>
         </li>
-        <li><span class="seconds">00</span>
+        <li><span id="seconds" class="seconds">00</span>
             <p class="timeRefSeconds">seconds</p>
         </li>
-        <li><span class="miliSeconds">000</span>
+        <li><span id="milliSeconds" class="miliSeconds">000</span>
             <p class="timeRefMilliSeconds">milli</p>
         </li>
     </ul>
     <div class="btn-group-lg" style="margin-top: -50px; padding-bottom: 10px;">
-        <button type="submit" class="btn btn-success active" style="width:150px; padding: 5px;">Start</button>
-        <button type="submit" class="btn btn-default disabled" style="width: 150px; padding: 5px;">Reset</button>
-        <button type="submit" class="btn btn-primary disabled" style="width: 150px; padding: 5px;">Export</button>
+        <button type="submit" id="btnTimerStart" class="btn btn-success active" style="width:150px; padding: 5px;">
+            Start
+        </button>
+        <button type="submit" id="btnTimerReset" class="btn btn-default disabled" style="width: 150px; padding: 5px;">
+            Reset
+        </button>
+        <button type="submit" id="btnFileExport" class="btn btn-primary disabled" style="width: 150px; padding: 5px;">
+            Export
+        </button>
     </div>
 </div>
+
+<!-- lap one stop watch -->
 <div class="container-fluid" style="margin-top: -30px;">
     <div class="row row-centered">
         <div class="col-md-7 col-centered lapCountdownList">
@@ -122,16 +106,16 @@
                 </div>
                 <div class="col-md-4 col-centered" style="width: 300px; padding:  0px 25px;">
                     <ul class="lapCountdown">
-                        <li><span class="hours">00</span>
+                        <li><span id="lapOneHour" class="hours">00</span>
                             <!--<p class="timeRefHours">hours</p>-->
                         </li>
-                        <li><span class="minutes">00</span>
+                        <li><span id="lapOneMinute" class="minutes">00</span>
                             <!-- <p class="timeRefMinutes">minutes</p>-->
                         </li>
-                        <li><span class="seconds">00</span>
+                        <li><span id="lapOneSecond" class="seconds">00</span>
                             <!--<p class="timeRefSeconds">seconds</p>-->
                         </li>
-                        <li><span class="miliSeconds">000</span>
+                        <li><span id="lapOneMilliSecond" class="miliSeconds">00</span>
                             <!-- <p class="timeRefMilliSeconds">milli</p>-->
                         </li>
                     </ul>
@@ -140,12 +124,12 @@
                     <table>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-primary active">
+                                <button type="button" id="lapOneStart" class="btn btn-primary disabled">
                                     <span class="glyphicon glyphicon-play"></span>
                                 </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-danger">
+                                <button type="button" id="lapOneStop" class="btn btn-danger disabled">
                                     <span class="glyphicon glyphicon-stop"></span>
                                 </button>
                             </td>
@@ -157,6 +141,7 @@
     </div>
 </div>
 
+<!--lap two stopwatch -->
 <div class="container-fluid" style="margin-top: -50px;">
     <div class="row row-centered">
         <div class="col-md-7 col-centered lapCountdownList">
@@ -166,16 +151,16 @@
                 </div>
                 <div class="col-md-4 col-centered" style="width: 300px; padding:  0px 25px;">
                     <ul class="lapCountdown">
-                        <li><span class="hours">00</span>
+                        <li><span id="lapTwoHour" class="hours">00</span>
                             <!--<p class="timeRefHours">hours</p>-->
                         </li>
-                        <li><span class="minutes">00</span>
+                        <li><span id="lapTwoMinute" class="minutes">00</span>
                             <!-- <p class="timeRefMinutes">minutes</p>-->
                         </li>
-                        <li><span class="seconds">00</span>
+                        <li><span id="lapTwoSecond" class="seconds">00</span>
                             <!--<p class="timeRefSeconds">seconds</p>-->
                         </li>
-                        <li><span class="miliSeconds">000</span>
+                        <li><span id="lapTwoMilliSecond" class="miliSeconds">00</span>
                             <!-- <p class="timeRefMilliSeconds">milli</p>-->
                         </li>
                     </ul>
@@ -184,12 +169,12 @@
                     <table>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-primary active">
+                                <button type="button" id="lapTwoBtnStart" class="btn btn-primary active disabled">
                                     <span class="glyphicon glyphicon-play"></span>
                                 </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-danger">
+                                <button type="button" id="lapTwoBtnStop" class="btn btn-primary btn-danger disabled">
                                     <span class="glyphicon glyphicon-stop"></span>
                                 </button>
                             </td>
@@ -201,6 +186,7 @@
     </div>
 </div>
 
+<!-- lap three stopwatch -->
 <div class="container-fluid" style="margin-top: -50px;">
     <div class="row row-centered">
         <div class="col-md-7 col-centered lapCountdownList">
@@ -210,16 +196,16 @@
                 </div>
                 <div class="col-md-4 col-centered" style="width: 300px; padding:  0px 25px;">
                     <ul class="lapCountdown">
-                        <li><span class="hours">00</span>
+                        <li><span id="lapThreeHour" class="hours">00</span>
                             <!--<p class="timeRefHours">hours</p>-->
                         </li>
-                        <li><span class="minutes">00</span>
+                        <li><span id="lapThreeMinute" class="minutes">00</span>
                             <!-- <p class="timeRefMinutes">minutes</p>-->
                         </li>
-                        <li><span class="seconds">00</span>
+                        <li><span id="lapThreeSecond" class="seconds">00</span>
                             <!--<p class="timeRefSeconds">seconds</p>-->
                         </li>
-                        <li><span class="miliSeconds">000</span>
+                        <li><span id="lapThreeMilliSecond" class="miliSeconds">00</span>
                             <!-- <p class="timeRefMilliSeconds">milli</p>-->
                         </li>
                     </ul>
@@ -228,12 +214,12 @@
                     <table>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-primary active">
+                                <button type="button" id="lapThreeBtnStart" class="btn btn-primary disabled">
                                     <span class="glyphicon glyphicon-play"></span>
                                 </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-danger">
+                                <button type="button" id="lapThreeBtnStop" class="btn btn-primary btn-danger disabled">
                                     <span class="glyphicon glyphicon-stop"></span>
                                 </button>
                             </td>
@@ -244,14 +230,16 @@
         </div>
     </div>
 </div>
+
+<!--data save to file-->
 <div class="container-fluid">
     <div class="row row-centered" style="margin-top: -40px;">
         <div class="col-md-3 col-centered">
             <div class="btn-group-lg">
-                <button type="button" class="btn btn-primary" style="width: 150px; padding: 5px;">
+                <button type="button" id="btnSave" class="btn btn-primary disabled" style="width: 150px; padding: 5px;">
                     <span class="glyphicon glyphicon-save"></span>Save
                 </button>
-                <button type="button" class="btn btn-danger" style="width: 150px; padding: 5px;">
+                <button type="button" id="btnCancel" class="btn btn-danger disabled" style="width: 150px; padding: 5px;">
                     <span class="glyphicon glyphicon-remove"></span>Cancel
                 </button>
             </div>
@@ -260,54 +248,7 @@
 </div>
 
 
-<script>
-    $(document).ready(function () {
-        var hours = $('.hours');
-        var minutes = $('.minutes');
-        var seconds = $('.seconds');
-        var milli = $('.miliSeconds');
-        var count = 0;
-        var sCount = 0;
-        var mCount = 0;
-        var hCount = 0;
-        var display = 100;
-
-        function updateHour() {
-            hCount++;
-            if (hCount == 60) {
-                hCount = 0;
-            }
-            hours.text(("0" + hCount).slice(-2));
-        };
-
-        function updateMinute() {
-            mCount++;
-            if (mCount === 60) {
-                mCount = 0;
-                updateHour();
-            }
-            minutes.text(("0" + mCount).slice(-2));
-        };
-
-        function updateSecond() {
-            sCount++;
-            if (sCount === 60) {
-                sCount = 0;
-                updateMinute();
-            }
-            seconds.text(("0" + sCount).slice(-2));
-        };
-        function updateMilliSecond() {
-            count++;
-            if (count === 100) {
-                count = 0;
-                updateSecond();
-            }
-            milli.text(("0" + count).slice(-2));
-            setTimeout(updateMilliSecond, 10);
-        };
-        updateMilliSecond();
-    })
-</script>
+<script src="js/StopWatchTimer.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
