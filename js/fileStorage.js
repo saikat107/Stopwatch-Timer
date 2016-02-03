@@ -1,20 +1,19 @@
-function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3){
+function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3) {
 
-    var header = "Team Name,TotalTime,Lap1,Lap2,Lap3";
 
-    this.save = function()
-    {
+    this.save = function () {
         var date = getTodaysDate();
+        console.log(date);
+        var key = teamName + "-" + date;
         var value = getCSVFormattedData();
-        var key = teamName + value;
+        console.log("Key" + key);
         localStorage.setItem(key, value);
-        console.log(teamName + " has been stored");
+        /* console.log(teamName + " has been stored");*/
 
     };
 
 
-    function getTodaysDate()
-    {
+    function getTodaysDate() {
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1;
@@ -23,10 +22,26 @@ function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3){
 
     };
 
-    function getCSVFormattedData()
-    {
+    function getCSVFormattedData() {
         var data = teamName + "," + totalTime + "," + Lap1 + "," + Lap2 + "," + Lap3;
         return data;
+    };
+
+    this.isTeamNameExist = function () {
+        var res = false;
+        if (localStorage.length > 0) {
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                key = key.split("-", 2);
+                var storedTeamName = key[0];
+                if (storedTeamName == teamName) {
+                    res = true;
+                    break;
+                }
+
+            }
+        }
+        return res;
     };
 
 

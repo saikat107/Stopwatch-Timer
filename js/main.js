@@ -6,7 +6,6 @@ $(document).ready(function () {
 
     var btnStart = $('#btnTimerStart');
     var btnReset = $('#btnTimerReset');
-    var btnExport = $('#btnFileExport');
     var hours = $('#hours');
     var minutes = $('#minutes');
     var seconds = $('#seconds');
@@ -33,6 +32,8 @@ $(document).ready(function () {
     var btnCancel = $('#btnCancel');
     var teamName = $('#teamName');
     var downLoadAnchor = $('#download');
+    var popUpDialog = $('#myModal');
+    var btnTrash = $('#btnTrash');
 
     var fileCreator = new FileCreator();
     var mainWatch = new StopWatchTimer(milli, seconds, minutes, hours, true);
@@ -40,13 +41,24 @@ $(document).ready(function () {
     var lapTwoWatch = new StopWatchTimer(lapTwoMilliSecond, lapTwoSecond, lapTwoMinute, lapTwoHour, false);
     var lapThreeWatch = new StopWatchTimer(lapThreeMilliSecond, lapThreeSecond, lapThreeMinute, lapThreeHour, false);
 
-    if (localStorage) {
-        // LocalStorage is supported!
-        console.log("local storage supported");
-    } else {
-        // No support. Use a fallback such as browser cookies or store on the server.
-        console.log("local storage not supported");
+    function setTrashBtnVisibility() {
+        if (localStorage.length > 0) {
+            btnTrash.attr('class', 'btn btn-danger active');
+            downLoadAnchor.attr("class", "btn btn-primary active");
+        }
     }
+
+    setTrashBtnVisibility();
+
+    btnTrash.click(function () {
+        $('#delete-file-modal').modal();
+        $('#confirm-delete-button').click(function () {
+            localStorage.clear();
+            btnTrash.attr('class', 'btn btn-danger disabled');
+            downLoadAnchor.attr("class", "btn btn-primary disabled");
+            showModel("Success", "Previous all stored data has been deleted");
+        });
+    });
 
     btnStart.click(function () {
         var btnText = null;
@@ -70,6 +82,7 @@ $(document).ready(function () {
     });
 
     btnReset.click(function () {
+        teamName.val("");
         mainWatch.reset();
         lapOneWatch.reset();
         lapTwoWatch.reset();
@@ -175,55 +188,93 @@ $(document).ready(function () {
         if (localStorage) {
             var team = teamName.val();
             if (team != null && team != '') {
-                setSessionDataEnabled();
-                console.log("Team name found" + team);
+                /*console.log("Team name found" + team);*/
                 var totalTime = mainWatch.getTime();
                 var lap1 = lapOneWatch.getTime();
                 var lap2 = lapTwoWatch.getTime();
                 var lap3 = lapThreeWatch.getTime();
                 var fileStore = new FileStorage(team, totalTime, lap1, lap2, lap3);
-                fileStore.save();
-
-                fileCreator.createFile();
-                var url = fileCreator.createFile();
-                /*downLoadAnchor.attr('href', url);
-                downLoadAnchor.attr('download', 'Result.csv');*/
+                if (fileStore.isTeamNameExist()) {
+                    showModel("Warning", "Data already exist");
+                }
+                else {
+                    fileStore.save();
+                    fileCreator.createFile();
+                    var url = fileCreator.createFile();
+                    setDownload();
+                    setTrashBtnVisibility();
+                    showModel("Success", "Data has been stored");
+                }
             }
-            setDownload();
+            else {
+                showModel("Warning", "Plz enter team name first");
+            }
         }
     });
 
-    function setSessionDataEnabled() {
-        if (typeof(Storage) !== "undefined") {
-            if (!sessionStorage.enabled) {
-               sessionStorage.enabled = 1;
-            }
+    function showModel(modelType, message) {
+        var modelHeader = $('.modal-title');
+        var modelBody = $('.modelMsg');
+        var headerColor = null;
+        var msgBodyColor = null;
+        switch (modelType.toUpperCase()) {
+            case "WARNING":
+                headerColor = "#ED6A5A";
+                msgBodyColor = "#E8D547";
+                break;
+            case "SUCCESS":
+                headerColor = "#35C4B6";
+                msgBodyColor = "#5BC0EB";
+                break;
+            case "ERROR":
+                break;
         }
+        modelHeader.css("color", headerColor);
+        modelHeader.css("font-weight", "bold");
+        modelHeader.text(modelType + "!");
+        modelBody.css("color", msgBodyColor);
+        modelBody.css("font-weight", "bold");
+        modelBody.text(message);
+        popUpDialog.modal();
+
     };
+
+    /* function setSessionDataEnabled() {
+     if (typeof(Storage) !== "undefined") {
+     if (!sessionStorage.enabled) {
+     sessionStorage.enabled = 1;
+     }
+     }
+     };*/
 
 
     btnCancel.click(function () {
-
+        teamName.val("");
+        mainWatch.reset();
+        lapOneWatch.reset();
+        lapTwoWatch.reset();
+        lapThreeWatch.reset();
+        btnSave.attr('class', 'btn btn-primary disabled');
+        btnCancel.attr('class', 'btn btn-danger disabled');
     });
 
 
-    function setDownload()
-    {
+    function setDownload() {
         var url = fileCreator.getDownloadUrl();
-        downLoadAnchor.attr("download", "Shuvo.csv");
+        downLoadAnchor.attr("download", "Result.csv");
         downLoadAnchor.attr("href", url);
         console.log(downLoadAnchor);
     };
 
-    function getCurrentPath() {
-        var currentUrl = location.pathname;
-        var reg = new RegExp('%20', 'g');
-        currentUrl = currentUrl.replace(reg, ' ');
-        reg = new RegExp('/', 'g');
-        currentUrl = currentUrl.replace(reg, '\\');
-        var currentPath = currentUrl.slice(0, -10);
-        return currentPath;
-    }
-
+    /* function getCurrentPath() {
+     var currentUrl = location.pathname;
+     var reg = new RegExp('%20', 'g');
+     currentUrl = currentUrl.replace(reg, ' ');
+     reg = new RegExp('/', 'g');
+     currentUrl = currentUrl.replace(reg, '\\');
+     var currentPath = currentUrl.slice(0, -10);
+     return currentPath;
+     };
+     */
 
 });

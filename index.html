@@ -50,6 +50,9 @@
 <!-- TIMER -->
 <div class="timer-area">
     <h1>Countdown Timer</h1>
+    <button type="button" id="btnTrash" class="btn btn-danger disabled"
+            style="float: right; margin-top: -60px; margin-right: 5px;"><abbr title="Clear Data Storage"><span
+            class="glyphicon glyphicon-trash"></span></abbr></button>
     <div class="container-fluid">
         <div class="row row-centered">
             <div class="col-md-8 col-centered">
@@ -89,7 +92,7 @@
         <button type="submit" id="btnTimerReset" class="btn btn-default disabled" style="width: 150px; padding: 5px;">
             Reset
         </button>
-        <a id="download" class="btn btn-primary active" href="" download=""
+        <a id="download" class="btn btn-default disabled" href="" download=""
            style="text-decoration: none; width: 150px; padding: 5px;" target="_blank">Export
         </a>
     </div>
@@ -246,6 +249,40 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p class="modelMsg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger active" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Model for trash -->
+<div class="modal fade" id="delete-file-modal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                Are you sure you want to delete this file?
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-danger" id="confirm-delete-button">Delete</button>
+                <button data-dismiss="modal" class="btn btn-default" id="cancel-delete-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript" src="js/FileCreator.js"></script>
 <script type="text/javascript" src="js/fileStorage.js"></script>
