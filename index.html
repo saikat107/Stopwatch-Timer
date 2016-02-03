@@ -32,7 +32,6 @@
         }
 
 
-
     </style>
 
     <!--[if lt IE 9]>
@@ -40,9 +39,9 @@
     <![endif]-->
 
     <!-- JS -->
-    <script src="js/jquery-2.2.0.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/npm.js"></script>
+    <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/npm.js"></script>
 </head>
 <body>
 
@@ -62,7 +61,7 @@
                     <div class="col-md-6 col-centered">
                         <div class="form-group has-feedback" style="margin-left: -20px;">
                             <i class="glyphicon glyphicon-user form-control-feedback"></i>
-                            <input type="text" class="form-control" placeholder="Team Name"/>
+                            <input type="text" id="teamName" class="form-control" placeholder="Team Name" required/>
                         </div>
                     </div>
                 </div>
@@ -90,9 +89,9 @@
         <button type="submit" id="btnTimerReset" class="btn btn-default disabled" style="width: 150px; padding: 5px;">
             Reset
         </button>
-        <button type="submit" id="btnFileExport" class="btn btn-primary disabled" style="width: 150px; padding: 5px;">
-            Export
-        </button>
+        <a id="download" class="btn btn-primary active" href="" download=""
+           style="text-decoration: none; width: 150px; padding: 5px;" target="_blank">Export
+        </a>
     </div>
 </div>
 
@@ -239,7 +238,8 @@
                 <button type="button" id="btnSave" class="btn btn-primary disabled" style="width: 150px; padding: 5px;">
                     <span class="glyphicon glyphicon-save"></span>Save
                 </button>
-                <button type="button" id="btnCancel" class="btn btn-danger disabled" style="width: 150px; padding: 5px;">
+                <button type="button" id="btnCancel" class="btn btn-danger disabled"
+                        style="width: 150px; padding: 5px;">
                     <span class="glyphicon glyphicon-remove"></span>Cancel
                 </button>
             </div>
@@ -247,8 +247,10 @@
     </div>
 </div>
 
+<script type="text/javascript" src="js/FileCreator.js"></script>
+<script type="text/javascript" src="js/fileStorage.js"></script>
+<script type="text/javascript" src="js/StopWatchTimer.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 
-<script src="js/StopWatchTimer.js"></script>
-<script src="js/main.js"></script>
 </body>
 </html>

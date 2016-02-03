@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function () {
-    console.log('Hello World');
+
     var btnStart = $('#btnTimerStart');
     var btnReset = $('#btnTimerReset');
     var btnExport = $('#btnFileExport');
@@ -31,12 +31,22 @@ $(document).ready(function () {
     var lapThreeMilliSecond = $('#lapThreeMilliSecond');
     var btnSave = $('#btnSave');
     var btnCancel = $('#btnCancel');
+    var teamName = $('#teamName');
+    var downLoadAnchor = $('#download');
 
-
+    var fileCreator = new FileCreator();
     var mainWatch = new StopWatchTimer(milli, seconds, minutes, hours, true);
     var lapOneWatch = new StopWatchTimer(lapOneMilliSecond, lapOneSecond, lapOneMinute, lapOneHour, false);
     var lapTwoWatch = new StopWatchTimer(lapTwoMilliSecond, lapTwoSecond, lapTwoMinute, lapTwoHour, false);
     var lapThreeWatch = new StopWatchTimer(lapThreeMilliSecond, lapThreeSecond, lapThreeMinute, lapThreeHour, false);
+
+    if (localStorage) {
+        // LocalStorage is supported!
+        console.log("local storage supported");
+    } else {
+        // No support. Use a fallback such as browser cookies or store on the server.
+        console.log("local storage not supported");
+    }
 
     btnStart.click(function () {
         var btnText = null;
@@ -161,16 +171,59 @@ $(document).ready(function () {
     });
 
     btnSave.click(function () {
+        console.log("btn save click");
+        if (localStorage) {
+            var team = teamName.val();
+            if (team != null && team != '') {
+                setSessionDataEnabled();
+                console.log("Team name found" + team);
+                var totalTime = mainWatch.getTime();
+                var lap1 = lapOneWatch.getTime();
+                var lap2 = lapTwoWatch.getTime();
+                var lap3 = lapThreeWatch.getTime();
+                var fileStore = new FileStorage(team, totalTime, lap1, lap2, lap3);
+                fileStore.save();
 
+                fileCreator.createFile();
+                var url = fileCreator.createFile();
+                /*downLoadAnchor.attr('href', url);
+                downLoadAnchor.attr('download', 'Result.csv');*/
+            }
+            setDownload();
+        }
     });
+
+    function setSessionDataEnabled() {
+        if (typeof(Storage) !== "undefined") {
+            if (!sessionStorage.enabled) {
+               sessionStorage.enabled = 1;
+            }
+        }
+    };
 
 
     btnCancel.click(function () {
 
     });
 
-    btnExport.click(function () {
 
-    });
+    function setDownload()
+    {
+        var url = fileCreator.getDownloadUrl();
+        downLoadAnchor.attr("download", "Shuvo.csv");
+        downLoadAnchor.attr("href", url);
+        console.log(downLoadAnchor);
+    };
+
+    function getCurrentPath() {
+        var currentUrl = location.pathname;
+        var reg = new RegExp('%20', 'g');
+        currentUrl = currentUrl.replace(reg, ' ');
+        reg = new RegExp('/', 'g');
+        currentUrl = currentUrl.replace(reg, '\\');
+        var currentPath = currentUrl.slice(0, -10);
+        return currentPath;
+    }
+
 
 });
