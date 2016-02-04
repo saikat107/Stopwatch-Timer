@@ -6,25 +6,25 @@ $(document).ready(function () {
 
     var btnStart = $('#btnTimerStart');
     var btnReset = $('#btnTimerReset');
-    var hours = $('#hours');
+   /* var hours = $('#hours');*/
     var minutes = $('#minutes');
     var seconds = $('#seconds');
     var milli = $('#milliSeconds');
     var lapOneBtnStart = $('#lapOneStart');
     var lapOneBtnStop = $('#lapOneStop');
-    var lapOneHour = $('#lapOneHour');
+   /* var lapOneHour = $('#lapOneHour');*/
     var lapOneMinute = $('#lapOneMinute');
     var lapOneSecond = $('#lapOneSecond');
     var lapOneMilliSecond = $('#lapOneMilliSecond');
     var lapTwoBtnStart = $('#lapTwoBtnStart');
     var lapTwoBtnStop = $('#lapTwoBtnStop');
-    var lapTwoHour = $('#lapTwoHour');
+   /* var lapTwoHour = $('#lapTwoHour');*/
     var lapTwoMinute = $('#lapTwoMinute');
     var lapTwoSecond = $('#lapTwoSecond');
     var lapTwoMilliSecond = $('#lapTwoMilliSecond');
     var lapThreeBtnStart = $('#lapThreeBtnStart');
     var lapThreeBtnStop = $('#lapThreeBtnStop');
-    var lapThreeHour = $('#lapThreeHour');
+   /* var lapThreeHour = $('#lapThreeHour');*/
     var lapThreeMinute = $('#lapThreeMinute');
     var lapThreeSecond = $('#lapThreeSecond');
     var lapThreeMilliSecond = $('#lapThreeMilliSecond');
@@ -36,10 +36,10 @@ $(document).ready(function () {
     var btnTrash = $('#btnTrash');
 
     var fileCreator = new FileCreator();
-    var mainWatch = new StopWatchTimer(milli, seconds, minutes, hours, true);
-    var lapOneWatch = new StopWatchTimer(lapOneMilliSecond, lapOneSecond, lapOneMinute, lapOneHour, false);
-    var lapTwoWatch = new StopWatchTimer(lapTwoMilliSecond, lapTwoSecond, lapTwoMinute, lapTwoHour, false);
-    var lapThreeWatch = new StopWatchTimer(lapThreeMilliSecond, lapThreeSecond, lapThreeMinute, lapThreeHour, false);
+    var mainWatch = new StopWatchTimer(milli, seconds, minutes, true);
+    var lapOneWatch = new StopWatchTimer(lapOneMilliSecond, lapOneSecond, lapOneMinute, false);
+    var lapTwoWatch = new StopWatchTimer(lapTwoMilliSecond, lapTwoSecond, lapTwoMinute, false);
+    var lapThreeWatch = new StopWatchTimer(lapThreeMilliSecond, lapThreeSecond, lapThreeMinute, false);
 
     function setTrashBtnVisibility() {
         if (localStorage.length > 0) {

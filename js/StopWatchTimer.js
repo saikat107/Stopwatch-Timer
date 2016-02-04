@@ -1,7 +1,7 @@
 /**
  * Created by Shuvojit Saha on 2/2/2016.
  */
-function StopWatchTimer(elementMilli, elementSecond, elementMinute, elementHour, isMainWatch) {
+function StopWatchTimer(elementMilli, elementSecond, elementMinute, isMainWatch) {
 
     var time = 0;
     var interval;
@@ -57,7 +57,7 @@ function StopWatchTimer(elementMilli, elementSecond, elementMinute, elementHour,
     function setHours(hours) {
         hours = ("0" + (parseInt(hours) - 6)).slice(-2);
         hour = hours;
-        elementHour.text(hours);
+       /* elementHour.text(hours);*/
         /* console.log(hours + ':');*/
     }
 
