@@ -2,7 +2,7 @@
  * Created by Shuvojit Saha on 2/3/2016.
  */
 var FileCreator = function () {
-    var header = "Team Name,TotalTime,Lap1,Lap2,Lap3";
+    var header = "Team Name,TotalTime,Lap1,Lap2,Lap3,Score,Penalty,Bonus";
     url = null;
 
     function retrieveDataFromStorage() {
@@ -13,7 +13,7 @@ var FileCreator = function () {
             var value = localStorage.getItem(key);
             /* console.log('Key = ' + key + " value = " + value);*/
             data[i + 1] = value;
-            /*console.log(data[i + 1]);*/
+           /* console.log(data[i + 1]);*/
         }
         return data;
     };
@@ -27,10 +27,10 @@ var FileCreator = function () {
             /*console.log(data[i]);*/
         }
         url = URL.createObjectURL(blob);
-        /*console.log(url);*/
-        /*var url = URL.createObjectURL(blob);
-         console.log("file created");*/
-        /*return url;*/
+        console.log(url);
+        var url = URL.createObjectURL(blob);
+         console.log("file created");
+        return url;
     };
 
     this.getDownloadUrl = function () {

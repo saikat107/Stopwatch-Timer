@@ -99,7 +99,8 @@ function StopWatchTimer(elementMilli, elementSecond, elementMinute, isMainWatch)
     };
 
     this.getTime = function () {
-        var time = hour + ":" + minute + ":" + second + ":" + millisecond;
+        var time = minute + ":" + second + ":" + millisecond;
+        console.log(time);
         return time;
     }
 

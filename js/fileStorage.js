@@ -1,4 +1,4 @@
-function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3) {
+function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3, score, penalty, bonus) {
 
 
     this.save = function () {
@@ -23,11 +23,11 @@ function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3) {
     };
 
     function getCSVFormattedData() {
-        var data = teamName + "," + totalTime + "," + Lap1 + "," + Lap2 + "," + Lap3;
+        var data = teamName + "," + totalTime + "," + Lap1 + "," + Lap2 + "," + Lap3 + "," + score + "," + penalty + "," + bonus;
         return data;
     };
 
-    this.isTeamNameExist = function () {
+    this.isTeamNameExist = function (teamName) {
         var res = false;
         if (localStorage.length > 0) {
             for (var i = 0; i < localStorage.length; i++) {
@@ -38,7 +38,6 @@ function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3) {
                     res = true;
                     break;
                 }
-
             }
         }
         return res;

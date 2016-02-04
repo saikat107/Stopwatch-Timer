@@ -57,11 +57,13 @@ $(document).ready(function () {
     var countHumanIntervention = 0;
 
 
+    /* $('#myModal2').modal();*/
     function setTrashBtnVisibility() {
         if (localStorage.length > 0) {
             btnTrash.attr('class', 'btn btn-danger active');
             downLoadAnchor.attr("class", "btn btn-primary active");
             trashFlag = true;
+            setDownload();
         }
     }
 
@@ -74,6 +76,7 @@ $(document).ready(function () {
             $('#delete-file-modal').modal();
             $('#confirm-delete-button').click(function () {
                 localStorage.clear();
+                trashFlag = false;
                 btnTrash.attr('class', 'btn btn-danger disabled');
                 downLoadAnchor.attr("class", "btn btn-primary disabled");
                 showModel("Success", "Previous all stored data has been deleted");
@@ -256,17 +259,16 @@ $(document).ready(function () {
                 var lap1 = lapOneWatch.getTime();
                 var lap2 = lapTwoWatch.getTime();
                 var lap3 = lapThreeWatch.getTime();
-                var fileStore = new FileStorage(team, totalTime, lap1, lap2, lap3);
-                if (fileStore.isTeamNameExist()) {
-                    showModel("Warning", "Data already exist");
+                var scoreGen = new ScoreGenerator(lap1, lap2, lap3);
+                var score = scoreGen.getScore();
+                var penalty = countHumanIntervention;
+                var bonus = 0;
+                console.log(countHumanIntervention);
+                if (score == 0.00) {
+                    showModel("Warning", "Laps have not been started yet");
                 }
                 else {
-                    fileStore.save();
-                    fileCreator.createFile();
-                    var url = fileCreator.createFile();
-                    setDownload();
-                    setTrashBtnVisibility();
-                    showModel("Success", "Data has been stored");
+                    storeScore(team, totalTime, lap1, lap2, lap3, score, penalty, bonus);
                 }
             }
             else {
@@ -274,6 +276,51 @@ $(document).ready(function () {
             }
         }
     });
+
+    function storeScore(team, totalTime, lap1, lap2, lap3, score, penalty, bonus) {
+        var fileStorage = new FileStorage();
+        if (fileStorage.isTeamNameExist()) {
+            showModel("Warning", "Data already exist");
+        }
+        else {
+            var radioChecked = false;
+            var tmpScore = (score - (penalty * 20) + (bonus * 100)).toFixed(2);
+            var msg = "Score is " + tmpScore + "<br />" +
+                "Human intervention " + penalty + " times" + "<br />";
+            var model = $('#myModal2');
+            $('#scoreTitle').text("Team: " + team + "'s" + " score");
+            $('.scoreMsg').html(msg);
+            $('input[type=radio]').click(function () {
+                var option = $(this).val();
+                if (option == 1) {
+                    bonus = 1;
+                    tmpScore = (score - (penalty * 20) + (bonus * 100)).toFixed(2);
+                    msg = "Score is " + tmpScore + "<br />" +
+                        "Human intervention " + penalty + " times" + "<br />";
+                    $('.scoreMsg').html(msg);
+                    radioChecked = true;
+                }
+                else if (radioChecked && option == 0) {
+                    bonus = 0;
+                    radioChecked = false;
+                    tmpScore = (score - (penalty * 20) + (bonus * 100)).toFixed(2);
+                    msg = "Score is " + tmpScore + "<br />" +
+                        "Human intervention " + penalty + " times" + "<br />";
+                    $('.scoreMsg').html(msg);
+                }
+            });
+            $('#saveDataBtn').click(function () {
+                fileStorage = new FileStorage(team, totalTime, lap1, lap2, lap3,
+                    tmpScore, penalty*20, bonus*100);
+                fileStorage.save();
+                setDownload();
+                setTrashBtnVisibility();
+                showModel("Success", "Data has been stored");
+                resetAll();
+            });
+            model.modal();
+        }
+    };
 
     btnCancel.click(function () {
         if (mainFlagInterrupt == 2) {
@@ -295,6 +342,7 @@ $(document).ready(function () {
         lapTwoFlag = false;
         lapThreeFlag = false;
     };
+
 
     function showModel(modelType, message) {
         var modelHeader = $('.modal-title');
@@ -325,6 +373,7 @@ $(document).ready(function () {
 
 
     function setDownload() {
+        fileCreator.createFile();
         var url = fileCreator.getDownloadUrl();
         downLoadAnchor.attr("download", "Result.csv");
         downLoadAnchor.attr("href", url);
