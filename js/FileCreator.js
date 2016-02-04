@@ -13,7 +13,7 @@ var FileCreator = function () {
             var value = localStorage.getItem(key);
             /* console.log('Key = ' + key + " value = " + value);*/
             data[i + 1] = value;
-           /* console.log(data[i + 1]);*/
+            /* console.log(data[i + 1]);*/
         }
         return data;
     };
@@ -26,19 +26,16 @@ var FileCreator = function () {
             blob = new Blob([blob, data[i] + "\n"], {type: "text/plain"});
             /*console.log(data[i]);*/
         }
+        /* url = URL.createObjectURL(blob);
+         console.log(url);*/
         url = URL.createObjectURL(blob);
-        console.log(url);
-        var url = URL.createObjectURL(blob);
-         console.log("file created");
-        return url;
+        console.log("file created" + url);
+
     };
 
     this.getDownloadUrl = function () {
         return url;
     }
-
-
-
 
 
 };

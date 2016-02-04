@@ -76,7 +76,6 @@ $(document).ready(function () {
             $('#delete-file-modal').modal();
             $('#confirm-delete-button').click(function () {
                 localStorage.clear();
-                trashFlag = false;
                 btnTrash.attr('class', 'btn btn-danger disabled');
                 downLoadAnchor.attr("class", "btn btn-primary disabled");
                 showModel("Success", "Previous all stored data has been deleted");
@@ -375,6 +374,7 @@ $(document).ready(function () {
     function setDownload() {
         fileCreator.createFile();
         var url = fileCreator.getDownloadUrl();
+        console.log(url);
         downLoadAnchor.attr("download", "Result.csv");
         downLoadAnchor.attr("href", url);
         console.log(downLoadAnchor);
