@@ -337,23 +337,43 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="scoreTitle" style="color: #F25F5C">Hello World</h4>
+                <h4 class="modal-title" id="scoreTitle" style="color: #F25F5C">Bonus Score</h4>
             </div>
             <div class="modal-body">
-                <p class="scoreMsg" style="color: #1f2225; font-weight: bold;"></p>
-                <br/>
-                <b style="color: #FE5F55; font-weight: bold">Do the bot glow Led at the end?</b>
+             <!--   <p class="scoreMsg" style="color: #1f2225; font-weight: bold;"></p>
+                <br/>-->
+                <p><b style="color: #FE5F55; font-weight: bold">Do the bot glow Led at the end?</b></p>
                 <label class="radio-inline">
                     <input type="radio" name="ledGlow" value="1"> Yes
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="ledGlow" value="0">No
+                    <input type="radio" name="ledGlow" value="0" checked>No
                 </label>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" id="saveDataBtn">Save changes
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model data store confirmation -->
+<!-- Modal -->
+<div class="modal fade" id="myModal3" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p class="modelMsg">Data has been stored</p>
+                <p class="scoreMsg" style="color: #1f2225; font-weight: bold;"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger active" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

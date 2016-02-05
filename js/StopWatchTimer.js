@@ -12,6 +12,7 @@ function StopWatchTimer(elementMilli, elementSecond, elementMinute, isMainWatch)
     var millisecond = 0;
     var hour = 0;
     var minute = 0;
+    var humanIntervention = 0;
 
     function update() {
         if (this.isOn) {
@@ -37,7 +38,7 @@ function StopWatchTimer(elementMilli, elementSecond, elementMinute, isMainWatch)
 
     function setMinutes(minutes) {
         minutes = ("0" + minutes).slice(-2);
-        minute =  minutes;
+        minute = minutes;
         elementMinute.text(minutes);
         /* console.log(minutes + ':');*/
     }
@@ -57,7 +58,7 @@ function StopWatchTimer(elementMilli, elementSecond, elementMinute, isMainWatch)
     function setHours(hours) {
         hours = ("0" + (parseInt(hours) - 6)).slice(-2);
         hour = hours;
-       /* elementHour.text(hours);*/
+        /* elementHour.text(hours);*/
         /* console.log(hours + ':');*/
     }
 
@@ -95,13 +96,32 @@ function StopWatchTimer(elementMilli, elementSecond, elementMinute, isMainWatch)
         time = 0;
         this.state = 0;
         this.isOn = false;
+        humanIntervention = 0;
         update();
     };
 
     this.getTime = function () {
         var time = minute + ":" + second + ":" + millisecond;
+        time = convertToSecond(time);
         console.log(time);
         return time;
+    }
+
+    this.setHumanIntervention = function (val) {
+        humanIntervention = val;
+    };
+
+    this.getHumanIntervention = function () {
+        return humanIntervention;
+    };
+
+
+    function convertToSecond(lap) {
+        var arr = lap.split(":", 3);
+        /*console.log(parseInt(arr[1]));*/
+        var seconds = ((parseInt(arr[0]) * 60) + (parseInt(arr[1])) + (parseFloat(arr[2]) * 0.01)).toFixed(2);
+        console.log(seconds);
+        return seconds;
     }
 
 }

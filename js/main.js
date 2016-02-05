@@ -55,6 +55,7 @@ $(document).ready(function () {
     var lapThreeFlag = false;
     var mainFlagInterrupt = 0;
     var countHumanIntervention = 0;
+    var trashFlag = false;
 
 
     /* $('#myModal2').modal();*/
@@ -76,6 +77,7 @@ $(document).ready(function () {
             $('#delete-file-modal').modal();
             $('#confirm-delete-button').click(function () {
                 localStorage.clear();
+                trashFlag = false;
                 btnTrash.attr('class', 'btn btn-danger disabled');
                 downLoadAnchor.attr("class", "btn btn-primary disabled");
                 showModel("Success", "Previous all stored data has been deleted");
@@ -184,6 +186,7 @@ $(document).ready(function () {
     lapOneBtnHumanIntervention.click(function () {
         if (lapOneWatch.state == 1) {
             countHumanIntervention++;
+            lapOneWatch.setHumanIntervention(1);
             stopLapOne();
         }
     });
@@ -216,6 +219,7 @@ $(document).ready(function () {
     lapTwoBtnHumarIntervention.click(function () {
         if (lapTwoWatch.state == 1) {
             countHumanIntervention++;
+            lapTwoWatch.setHumanIntervention(1);
             stopLapTwo();
         }
     });
@@ -258,16 +262,24 @@ $(document).ready(function () {
                 var lap1 = lapOneWatch.getTime();
                 var lap2 = lapTwoWatch.getTime();
                 var lap3 = lapThreeWatch.getTime();
-                var scoreGen = new ScoreGenerator(lap1, lap2, lap3);
+                var humanInterventionArr = [
+                    lapOneWatch.getHumanIntervention(),
+                    lapTwoWatch.getHumanIntervention(),
+                    lapThreeWatch.getHumanIntervention()];
+                var scoreGen = new ScoreGenerator(lap1, lap2, lap3, humanInterventionArr);
                 var score = scoreGen.getScore();
+                var minimumTime = scoreGen.getMinimumTime();
                 var penalty = countHumanIntervention;
                 var bonus = 0;
                 console.log(countHumanIntervention);
                 if (score == 0.00) {
                     showModel("Warning", "Laps have not been started yet");
                 }
+                else if (score == -1) {
+                    showModel("Warning", "Submitted laps have human interventions");
+                }
                 else {
-                    storeScore(team, totalTime, lap1, lap2, lap3, score, penalty, bonus);
+                    storeScore(team, totalTime, lap1, lap2, lap3, minimumTime, score, penalty, bonus);
                 }
             }
             else {
@@ -276,7 +288,7 @@ $(document).ready(function () {
         }
     });
 
-    function storeScore(team, totalTime, lap1, lap2, lap3, score, penalty, bonus) {
+    function storeScore(team, totalTime, lap1, lap2, lap3, minimumTime, score, penalty, bonus) {
         var fileStorage = new FileStorage();
         if (fileStorage.isTeamNameExist()) {
             showModel("Warning", "Data already exist");
@@ -284,37 +296,38 @@ $(document).ready(function () {
         else {
             var radioChecked = false;
             var tmpScore = (score - (penalty * 20) + (bonus * 100)).toFixed(2);
-            var msg = "Score is " + tmpScore + "<br />" +
-                "Human intervention " + penalty + " times" + "<br />";
+           /* var msg = "Score is " + tmpScore + "<br />" +
+                "Human intervention " + penalty + " times" + "<br />";*/
             var model = $('#myModal2');
-            $('#scoreTitle').text("Team: " + team + "'s" + " score");
-            $('.scoreMsg').html(msg);
+            $('#scoreTitle').text("Bonus Score");
+            /*$('.scoreMsg').text(msg);*/
             $('input[type=radio]').click(function () {
                 var option = $(this).val();
                 if (option == 1) {
                     bonus = 1;
                     tmpScore = (score - (penalty * 20) + (bonus * 100)).toFixed(2);
-                    msg = "Score is " + tmpScore + "<br />" +
-                        "Human intervention " + penalty + " times" + "<br />";
-                    $('.scoreMsg').html(msg);
+                    /*msg = "Score is " + tmpScore + "<br />" +
+                     "Human intervention " + penalty + " times" + "<br />";
+                     $('.scoreMsg').html(msg);*/
                     radioChecked = true;
                 }
                 else if (radioChecked && option == 0) {
                     bonus = 0;
                     radioChecked = false;
                     tmpScore = (score - (penalty * 20) + (bonus * 100)).toFixed(2);
-                    msg = "Score is " + tmpScore + "<br />" +
-                        "Human intervention " + penalty + " times" + "<br />";
-                    $('.scoreMsg').html(msg);
+                    /* msg = "Score is " + tmpScore + "<br />" +
+                     "Human intervention " + penalty + " times" + "<br />";
+                     $('.scoreMsg').html(msg);*/
                 }
             });
             $('#saveDataBtn').click(function () {
                 fileStorage = new FileStorage(team, totalTime, lap1, lap2, lap3,
-                    tmpScore, penalty*20, bonus*100);
+                    minimumTime, penalty, penalty * 20, bonus * 100, tmpScore);
                 fileStorage.save();
+                trashFlag = true;
                 setDownload();
                 setTrashBtnVisibility();
-                showModel("Success", "Data has been stored");
+                showModel("Success", "Data has been stored", "Team " + team + "'s score is " + tmpScore);
                 resetAll();
             });
             model.modal();
@@ -343,7 +356,7 @@ $(document).ready(function () {
     };
 
 
-    function showModel(modelType, message) {
+    function showModel(modelType, message, scoreMsg) {
         var modelHeader = $('.modal-title');
         var modelBody = $('.modelMsg');
         var headerColor = null;
@@ -365,8 +378,15 @@ $(document).ready(function () {
         modelHeader.text(modelType + "!");
         modelBody.css("color", msgBodyColor);
         modelBody.css("font-weight", "bold");
-        modelBody.text(message);
-        popUpDialog.modal();
+        if (scoreMsg == null || scoreMsg == undefined) {
+            modelBody.text(message);
+            popUpDialog.modal();
+        }
+        else {
+            modelBody.text(message);
+            $('.scoreMsg').text(scoreMsg);
+            $('#myModal3').modal();
+        }
 
     };
 

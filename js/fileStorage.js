@@ -1,4 +1,4 @@
-function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3, score, penalty, bonus) {
+function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3, minimumTime, intervention, penalty, bonus, score) {
 
 
     this.save = function () {
@@ -23,7 +23,8 @@ function FileStorage(teamName, totalTime, Lap1, Lap2, Lap3, score, penalty, bonu
     };
 
     function getCSVFormattedData() {
-        var data = teamName + "," + totalTime + "," + Lap1 + "," + Lap2 + "," + Lap3 + "," + score + "," + penalty + "," + bonus;
+        var data = teamName + "," + totalTime + "," + Lap1 + "," + Lap2 + "," + Lap3 + "," + minimumTime + "," +
+            intervention + "," + penalty + "," + bonus + "," + score;
         return data;
     };
 

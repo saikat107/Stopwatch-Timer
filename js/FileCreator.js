@@ -2,7 +2,7 @@
  * Created by Shuvojit Saha on 2/3/2016.
  */
 var FileCreator = function () {
-    var header = "Team Name,TotalTime,Lap1,Lap2,Lap3,Score,Penalty,Bonus";
+    var header = "teamname,total_time,lap1time,lap2time,lap3time,minimum_valid_time,intervention,penalty,bonus,total_score";
     url = null;
 
     function retrieveDataFromStorage() {
