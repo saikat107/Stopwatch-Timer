@@ -353,6 +353,8 @@ $(document).ready(function () {
         lapOneFlag = false;
         lapTwoFlag = false;
         lapThreeFlag = false;
+		$("#bonusYes").attr("checked",false);
+		$("#bonusNo").attr("checked",true);
     };
 
 
