@@ -20,8 +20,15 @@ var ScoreGenerator = function (lap1, lap2, lap3, humanInterventionArr) {
                 score = -1;
             }
             else {
-                lapSecondList.sort();
-                minimumTime = lapSecondList[0];
+                //lapSecondList.sort();
+				minimumTime = 1000000;
+				var idx = 0;
+				while(idx < lapSecondList.length){
+					if(minimumTime < lapSecondList[idx]){
+						minimumTime = lapSecondList[idx];
+					}
+					idx++;
+				}
                 score = 3000 / minimumTime;
             }
         }
