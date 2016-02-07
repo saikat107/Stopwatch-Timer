@@ -24,7 +24,7 @@ var ScoreGenerator = function (lap1, lap2, lap3, humanInterventionArr) {
 				minimumTime = 1000000;
 				var idx = 0;
 				while(idx < lapSecondList.length){
-					if(minimumTime < lapSecondList[idx]){
+					if(minimumTime > lapSecondList[idx]){
 						minimumTime = lapSecondList[idx];
 					}
 					idx++;

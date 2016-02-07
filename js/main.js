@@ -272,10 +272,10 @@ $(document).ready(function () {
                 var penalty = countHumanIntervention;
                 var bonus = 0;
                 console.log(countHumanIntervention);
-                if (score == 0.00) {
+                /*if (score == 0.00) {
                     showModel("Warning", "Laps have not been started yet");
-                }
-                else if (score == -1) {
+                }*/
+                if (score == -1) {
                     showModel("Warning", "Submitted laps have human interventions");
                 }
                 else {
